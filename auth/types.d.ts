@@ -7,6 +7,8 @@ declare global {
         name: string;
         email: string;
         password: string;
+        // _id: ObjectId;
+        // __v: number;
       };
     }
   }
