@@ -6,7 +6,7 @@ const app = express();
 
 app.use(cookieParser());
 app.use(express.json());
+app.use('/api',userRouter)
 app.use(express.urlencoded({extended: true}));
-app.use("/api",userRouter)
 
 export default app;

@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import userModel from "../models/user.model";
 import { Request, Response } from "express";
-import { googleAuth } from "../utils/googleAuth";
+import { getGoogleAuthURL, getTokens, getGoogleUserInfo } from "../utils/googleAuth";
 
 dotenv.config();
 
@@ -74,40 +74,44 @@ export const profile = async (req: Request, res: Response): Promise<void> => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-export const googleLogin = async (
-  req: Request,
-  res: Response
-): Promise<any | void> => {
-  const { token } = req.body;
-  if (!token) {
-    return res.status(400).json({ message: "Token not found" });
-  }
-  try {
-    const user = await googleAuth(token);
-    const existingUser = await userModel.findOne({ email: user.email });
-    if (!existingUser) {
-        const newUser = new userModel({
-            name: user.name,
-            email: user.email,
-            googleId: user.googleId,
-            avatar: user.picture,
-        });
-        await newUser.save();
-    }else if (!user.googleId) {
-        user.googleId = user.googleId;
-        user.avatar = user.picture;
-        await user.save();
-      }
-    const authToken = jwt.sign({ id: existingUser!._id }, process.env.JWT_KEY!, {
-      expiresIn: "168h",
-    });
-    res.cookie("token", authToken);
-    return res.json({ authToken, user: existingUser });
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error" });
-  }
-};
-// const client = new OAuth2Client(process.env.CLIENT_ID);
-// export const googleAuth = async(token:string):Promise<any>=>{
 
-// }
+export const googleAuthCallback = async (req: Request, res: Response): Promise<any | null> => {
+  const { code } = req.query;
+
+  if (!code) {
+    return res.status(400).json({ message: "Authorization code not provided" });
+  }
+
+  try {
+    const { id_token, access_token } = await getTokens(code as string);
+
+    const googleUser = await getGoogleUserInfo(id_token, access_token);
+
+    const { email, name, picture, id: googleId } = googleUser;
+
+    let user = await userModel.findOne({ email });
+
+    if (!user) {
+      user = new userModel({ name, email, avatar: picture, googleId });
+      await user.save();
+    } else if (!user.googleId) {
+      user.googleId = googleId;
+      user.avatar = picture;
+      await user.save();
+    }
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_KEY!, {
+      expiresIn: "7d",
+    });
+
+    res.cookie("token", token, { httpOnly: true });
+    res.json({ token, user });
+  } catch (error) {
+    console.error("Google Login Error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+export const googleAuthRedirect = async (req: Request, res: Response): Promise<void> => {
+  const authURL = getGoogleAuthURL();
+  res.redirect(authURL);
+};

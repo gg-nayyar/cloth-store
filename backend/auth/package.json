@@ -5,9 +5,10 @@
   "license": "ISC",
   "author": "Krish Nayyar",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "nodemon --watch **/**.ts --exec npx ts-node ./server.ts",
+    "dev": "npx tsc && nodemon /server.js",
+    "start": "nodemon --watch **/**.ts --exec npx ts-node ./server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

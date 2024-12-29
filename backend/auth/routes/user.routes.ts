@@ -1,13 +1,13 @@
 import express from 'express';
-import {register, login, logout, profile,googleLogin} from '../controller/user.controller'; 
-// import authMiddleware from "../middleware/auth.middleware";
+import {register, login, logout, profile,googleAuthRedirect,googleAuthCallback} from '../controller/user.controller';
 
-const router =express.Router();
+const router = express.Router();
 
 router.post('/register',register);
 router.post('/login',login);
 router.get('/logout', logout);
 router.get('/profile',profile);
-router.post('/google',googleLogin)
+router.get('/google',googleAuthRedirect)
+router.get('/google/callback',googleAuthCallback)
 
 export default router;
