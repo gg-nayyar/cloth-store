@@ -1,5 +1,5 @@
-import app from "./app";
 import http from "http";
+import app from "./app";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
@@ -16,13 +16,12 @@ async function connect(){
     });
     try {
         await mongoose.connect(process.env.MONGO_URI!);
-        server.listen(8001, () => {
-          console.log("Server is running on port 8001");
+        server.listen(8002, () => {
+          console.log("Server is running on port 8002");
         });
     } catch (error) {
         console.log('Error connecting to database', error);
         return process.exit(1);
     }
-};
+}
 connect();
-

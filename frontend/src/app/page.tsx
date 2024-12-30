@@ -3,7 +3,7 @@ import React from "react";
 
 export default function Home() {
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:3001/api/google";
+    window.location.href = "http://localhost:8001/api/google";
   };
 
   return (

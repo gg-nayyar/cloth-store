@@ -12,8 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const app_1 = __importDefault(require("./app"));
 const http_1 = __importDefault(require("http"));
+const app_1 = __importDefault(require("./app"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
@@ -29,8 +29,8 @@ function connect() {
         });
         try {
             yield mongoose_1.default.connect(process.env.MONGO_URI);
-            server.listen(8001, () => {
-                console.log("Server is running on port 8001");
+            server.listen(8002, () => {
+                console.log("Server is running on port 8000");
             });
         }
         catch (error) {
@@ -39,5 +39,4 @@ function connect() {
         }
     });
 }
-;
 connect();

@@ -1,0 +1,18 @@
+{
+  "name": "products",
+  "version": "1.0.0",
+  "description": "This includes all the products routes stripe integration order routes",
+  "license": "ISC",
+  "author": "Krish Nayyar",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@types/express": "^5.0.0",
+    "@types/mongoose": "^5.11.96",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.2"
+  }
+}
