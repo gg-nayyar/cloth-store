@@ -10,8 +10,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@types/cookie-parser": "^1.4.8",
     "@types/express": "^5.0.0",
     "@types/mongoose": "^5.11.96",
+    "cookie-parser": "^1.4.7",
     "express": "^4.21.2",
     "mongoose": "^8.9.2"
   }

@@ -30,7 +30,7 @@ function connect() {
         try {
             yield mongoose_1.default.connect(process.env.MONGO_URI);
             server.listen(8002, () => {
-                console.log("Server is running on port 8000");
+                console.log("Server is running on port 8002");
             });
         }
         catch (error) {

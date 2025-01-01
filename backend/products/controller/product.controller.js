@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProduct = exports.getProducts = exports.createProduct = void 0;
+exports.editProduct = exports.getSingleProduct = exports.deleteProduct = exports.getProducts = exports.createProduct = void 0;
 const product_model_1 = __importDefault(require("../models/product.model"));
 const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -47,3 +47,26 @@ const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.deleteProduct = deleteProduct;
+const getSingleProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const product = yield product_model_1.default.findById(id);
+        res.json({ product });
+    }
+    catch (error) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+exports.getSingleProduct = getSingleProduct;
+const editProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const { name, description, price, image } = req.body;
+        const updatedProduct = yield product_model_1.default.findByIdAndUpdate(id, { name, description, price, image }, { new: true });
+        res.json({ message: "Product updated successfully", product: updatedProduct });
+    }
+    catch (error) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+exports.editProduct = editProduct;
