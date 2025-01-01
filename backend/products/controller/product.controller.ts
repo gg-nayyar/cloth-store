@@ -28,3 +28,22 @@ export const deleteProduct = async (req: Request, res: Response) => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
+export const getSingleProduct = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const product = await productModel.findById(id);
+        res.json({ product });
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+export const editProduct = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const { name, description, price, image } = req.body;
+        const updatedProduct = await productModel.findByIdAndUpdate(id, { name, description, price, image }, { new: true });
+        res.json({ message: "Product updated successfully", product: updatedProduct });
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
