@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 
-const server = http.createServer(app)
+const server = http.createServer(app);
 
 async function connect(){
     mongoose.connection.once('open', () => {

@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import Stripe from "stripe";
 import jwt from "jsonwebtoken";
 import { Request,Response } from "express";
 import orderModel from "../models/order.model";
@@ -49,6 +50,21 @@ export const deleteOrder = async (req:Request, res:Response)=>{
         const {id} = req.params;
         await orderModel.findByIdAndDelete(id);
         res.json({message:"Order deleted successfully"});
+    } catch (error) {
+        res.status(500).json({message:"Internal server error"});
+    }
+}
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: "2024-12-18.acacia",
+});
+export const createPaymentIntent = async (req:Request, res:Response)=>{
+    try {
+        const {amount} = req.body;
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount,
+            currency: "inr",
+        });
+        res.json({client_secret:paymentIntent.client_secret});
     } catch (error) {
         res.status(500).json({message:"Internal server error"});
     }
