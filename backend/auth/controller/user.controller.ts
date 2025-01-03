@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
-import userModel from "../models/user.model";
 import { Request, Response } from "express";
+import userModel from "../models/user.model";
 import { getGoogleAuthURL, getTokens, getGoogleUserInfo } from "../utils/googleAuth";
 
 dotenv.config();

@@ -12,19 +12,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
-const isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.authMiddleware = void 0;
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const user_model_1 = __importDefault(require("../models/user.model"));
+const authMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const token = req.cookies.token;
+    if (!token) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
     try {
-        if (!req.user) {
+        const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_KEY);
+        const user = yield user_model_1.default.findById(decoded.id);
+        if (user) {
+            req.user = user;
+        }
+        else {
             return res.status(401).json({ message: "Unauthorized" });
         }
-        if (req.user && req.user.email === process.env.ADMIN_EMAIL) {
-            next();
-        }
+        return next();
     }
-    catch (error) {
-        res.status(500).json({ message: "Internal server error" });
+    catch (err) {
+        return res.status(401).json({ message: 'Unauthorized' });
     }
 });
-exports.default = isAdmin;
+exports.authMiddleware = authMiddleware;

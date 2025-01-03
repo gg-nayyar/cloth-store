@@ -1,19 +1,36 @@
-import dotenv from "dotenv";
 import express from "express";
+import jwt from "jsonwebtoken";
+import userModel from "../models/user.model";
+// import { Iuser } from "../models/user.model"; // Adjust the import path as necessary
 
-dotenv.config();
+interface Iuser {
+    _id: string;
+    name: string;
+    email: string;
+    password: string;
+    googleId?: string;
+    avatar?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
 
-const isAdmin = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+export const authMiddleware = async (req: express.Request, res: express.Response, next: express.NextFunction):Promise<any|null> => {
+    const token = req.cookies.token;
+    if (!token) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
     try {
-        if (!req.user) {
+
+        const decoded = jwt.verify(token, process.env.JWT_KEY!) as jwt.JwtPayload;
+        const user = await userModel.findById(decoded.id)
+        if (user) {
+            req.user = user as Iuser;
+        } else {
             return res.status(401).json({ message: "Unauthorized" });
         }
-        if(req.user && req.user.email === process.env.ADMIN_EMAIL){
-            next();
-        }
+        return next();
+    } catch (err) {
+        return res.status(401).json({ message: 'Unauthorized' });
     }
-    catch (error) {
-        res.status(500).json({ message: "Internal server error" });
-    }
-};
-export default isAdmin;
+}
+    
