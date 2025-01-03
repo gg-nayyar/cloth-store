@@ -13,14 +13,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const axios_1 = __importDefault(require("axios"));
 dotenv_1.default.config();
 const isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        if (!req.user) {
+        const cookie = req.cookies.token;
+        if (!cookie) {
             return res.status(401).json({ message: "Unauthorized" });
         }
-        if (req.user && req.user.email === process.env.ADMIN_EMAIL) {
+        console.log("Cookie: ", cookie);
+        const decoded = jsonwebtoken_1.default.verify(cookie, process.env.JWT_KEY);
+        console.log("Decoded: ", decoded);
+        const user = yield axios_1.default.get(`http://localhost:8001/api/getUserbyId/${decoded.id}`);
+        console.log("User: ", user.data);
+        if (!user) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+        if (user && user.data.email === process.env.ADMIN_EMAIL) {
+            console.log("Admin");
             next();
+        }
+        else {
+            return res.status(200).json({ message: "Not Admin" });
         }
     }
     catch (error) {

@@ -12,8 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteOrder = exports.getSingleOrder = exports.getAllOrders = exports.createOrder = void 0;
+exports.createPaymentIntent = exports.deleteOrder = exports.getSingleOrder = exports.getAllOrders = exports.createOrder = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
+const stripe_1 = __importDefault(require("stripe"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const order_model_1 = __importDefault(require("../models/order.model"));
 dotenv_1.default.config();
@@ -73,3 +74,20 @@ const deleteOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.deleteOrder = deleteOrder;
+const stripe = new stripe_1.default(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2024-12-18.acacia",
+});
+const createPaymentIntent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { amount } = req.body;
+        const paymentIntent = yield stripe.paymentIntents.create({
+            amount,
+            currency: "inr",
+        });
+        res.json({ client_secret: paymentIntent.client_secret });
+    }
+    catch (error) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+exports.createPaymentIntent = createPaymentIntent;

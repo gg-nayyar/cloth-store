@@ -74,6 +74,15 @@ export const profile = async (req: Request, res: Response): Promise<void> => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+export const getUserbyId = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const user = await userModel.findById(id);
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 export const googleAuthCallback = async (req: Request, res: Response): Promise<any | null> => {
   const { code } = req.query;

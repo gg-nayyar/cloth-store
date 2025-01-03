@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.googleAuthRedirect = exports.googleAuthCallback = exports.profile = exports.logout = exports.login = exports.register = void 0;
+exports.googleAuthRedirect = exports.googleAuthCallback = exports.getUserbyId = exports.profile = exports.logout = exports.login = exports.register = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -85,6 +85,17 @@ const profile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.profile = profile;
+const getUserbyId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const user = yield user_model_1.default.findById(id);
+        res.json(user);
+    }
+    catch (error) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+exports.getUserbyId = getUserbyId;
 const googleAuthCallback = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { code } = req.query;
     if (!code) {

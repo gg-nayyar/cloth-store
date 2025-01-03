@@ -10,6 +10,7 @@ router.post('/register', user_controller_1.register);
 router.post('/login', user_controller_1.login);
 router.get('/logout', user_controller_1.logout);
 router.get('/profile', user_controller_1.profile);
+router.get('/getUserbyId/:id', user_controller_1.getUserbyId);
 router.get('/google', user_controller_1.googleAuthRedirect);
 router.get('/google/callback', user_controller_1.googleAuthCallback);
 exports.default = router;
