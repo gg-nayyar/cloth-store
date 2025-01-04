@@ -1,7 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import userModel from "../models/user.model";
-// import { Iuser } from "../models/user.model"; // Adjust the import path as necessary
 
 interface Iuser {
     _id: string;

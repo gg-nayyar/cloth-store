@@ -22,11 +22,8 @@ const isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
         if (!cookie) {
             return res.status(401).json({ message: "Unauthorized" });
         }
-        console.log("Cookie: ", cookie);
         const decoded = jsonwebtoken_1.default.verify(cookie, process.env.JWT_KEY);
-        console.log("Decoded: ", decoded);
         const user = yield axios_1.default.get(`http://localhost:8001/api/getUserbyId/${decoded.id}`);
-        console.log("User: ", user.data);
         if (!user) {
             return res.status(401).json({ message: "Unauthorized" });
         }

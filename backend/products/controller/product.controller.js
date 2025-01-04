@@ -16,8 +16,8 @@ exports.editProduct = exports.getSingleProduct = exports.deleteProduct = exports
 const product_model_1 = __importDefault(require("../models/product.model"));
 const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name, description, price, image } = req.body;
-        const newProduct = new product_model_1.default({ name, description, price, image });
+        const { name, description, price, image, stuff, type, category } = req.body;
+        const newProduct = new product_model_1.default({ name, description, price, image, stuff, type, category });
         yield newProduct.save();
         res.json({ message: "Product created successfully", product: newProduct });
     }
@@ -61,8 +61,8 @@ exports.getSingleProduct = getSingleProduct;
 const editProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const { name, description, price, image } = req.body;
-        const updatedProduct = yield product_model_1.default.findByIdAndUpdate(id, { name, description, price, image }, { new: true });
+        const { name, description, price, image, stuff, type, category } = req.body;
+        const updatedProduct = yield product_model_1.default.findByIdAndUpdate(id, { name, description, price, image, stuff, type, category }, { new: true });
         res.json({ message: "Product updated successfully", product: updatedProduct });
     }
     catch (error) {

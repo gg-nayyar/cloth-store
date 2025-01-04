@@ -44,13 +44,17 @@ export const login = async (
     }
     const isValid = await bcrypt.compare(password, user.password!);
     if (!isValid) {
+      console.log("Wrong password");
       return res.status(400).json({ message: "Wrong password" });
     }
     const token = jwt.sign({ id: user._id }, process.env.JWT_KEY!, {
       expiresIn: "168h",
     });
-    res.cookie("token", token);
+    res.cookie("token", token,
+      { httpOnly: true, secure: true, maxAge: 1000 * 60 * 60 * 24 * 7 }
+    );
     res.json({ token, user });
+    // res.redirect("http://localhost:3000/home");
   } catch (err) {
     res.status(500).json({ message: "internal server error" });
   }

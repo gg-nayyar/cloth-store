@@ -52,13 +52,15 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         const isValid = yield bcrypt_1.default.compare(password, user.password);
         if (!isValid) {
+            console.log("Wrong password");
             return res.status(400).json({ message: "Wrong password" });
         }
         const token = jsonwebtoken_1.default.sign({ id: user._id }, process.env.JWT_KEY, {
             expiresIn: "168h",
         });
-        res.cookie("token", token);
-        res.json({ token, user });
+        res.cookie("token", token, { httpOnly: true, secure: true, maxAge: 1000 * 60 * 60 * 24 * 7 });
+        // res.json({ redirectURl: "http://localhost:3000/home" });
+        return res.redirect("http://localhost:3000/home");
     }
     catch (err) {
         res.status(500).json({ message: "internal server error" });

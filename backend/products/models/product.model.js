@@ -22,6 +22,18 @@ const productSchema = new mongoose_1.default.Schema({
         required: true,
         default: [],
     },
+    stuff: {
+        type: String,
+        required: true,
+    },
+    type: {
+        type: String,
+        required: true,
+    },
+    category: {
+        type: String,
+        required: true,
+    }
     //   reviews: [
     //     {
     //       type: mongoose.Schema.Types.ObjectId,

@@ -10,6 +10,7 @@ export default {
   theme: {
   	extend: {
   		colors: {
+			'skin': '#DCD0CA',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -58,5 +59,5 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+//   plugins: [require("tailwindcss-animate")],
 } satisfies Config;

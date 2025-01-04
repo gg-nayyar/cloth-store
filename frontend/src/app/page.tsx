@@ -1,14 +1,41 @@
-"use client"
+"use client";
 import React from "react";
+import Image from "next/image";
+import LoginForm from "../components/login-form";
+import axios from "axios";
 
 export default function Home() {
-  const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:8001/api/google";
+  type LoginFormData = {
+    email: string;
+    password: string;
   };
+  const handleLoginData = async (data: LoginFormData) => {
+    console.log("DATA: ", data);
+    axios.post<{ redirectUrl?: string }>(
+      "http://localhost:8001/api/login",
+      data,
+      { withCredentials: true }
+    );
+  };
+  // const handleGoogleLogin = () => {
+  //   window.location.href = "http://localhost:8001/api/google";
+  // };
 
   return (
-    <button onClick={handleGoogleLogin} style={{ padding: "10px 20px", background: "#4285F4", color: "#fff", border: "none", cursor: "pointer" }}>
-      Sign in with Google
-    </button>
+    <div className="flex h-screen w-screen">
+      <div className="h-full w-3/4 bg-skin">
+        <LoginForm onSubmit={handleLoginData} />
+      </div>
+      <div className="h-full bg-skin">
+        <Image
+          className=" p-10 h-full w-full"
+          src="/login.gif"
+          height={100}
+          width={100}
+          alt="Picture of a model"
+          unoptimized
+        />
+      </div>
+    </div>
   );
 }

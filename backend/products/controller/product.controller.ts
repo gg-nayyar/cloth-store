@@ -3,8 +3,8 @@ import { Request, Response } from "express";
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    const { name, description, price, image } = req.body;
-    const newProduct = new productModel({ name, description, price, image });
+    const { name, description, price, image, stuff, type, category, gender } = req.body;
+    const newProduct = new productModel({ name, description, price, image, stuff, type, category, gender});
     await newProduct.save();
     res.json({ message: "Product created successfully", product: newProduct });
   } catch (error) {
@@ -40,8 +40,8 @@ export const getSingleProduct = async (req: Request, res: Response) => {
 export const editProduct = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const { name, description, price, image } = req.body;
-        const updatedProduct = await productModel.findByIdAndUpdate(id, { name, description, price, image }, { new: true });
+        const { name, description, price, image,stuff, type, category, gender } = req.body;
+        const updatedProduct = await productModel.findByIdAndUpdate(id, { name, description, price, image, stuff, type, category, gender}, { new: true });
         res.json({ message: "Product updated successfully", product: updatedProduct });
     } catch (error) {
         res.status(500).json({ message: "Internal server error" });
