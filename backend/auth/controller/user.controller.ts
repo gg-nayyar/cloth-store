@@ -70,14 +70,14 @@ export const logout = async (
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
-export const profile = async (req: Request, res: Response): Promise<void> => {
-  try {
-    console.log(req.user);
-    res.send(req.user);
-  } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
-  }
-};
+// export const profile = async (req: Request, res: Response): Promise<void> => {
+//   try {
+//     console.log(req.user);
+//     res.send(req.user);
+//   } catch (error) {
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// };
 export const getUserbyId = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;

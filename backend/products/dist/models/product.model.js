@@ -28,9 +28,14 @@ const productSchema = new mongoose_1.default.Schema({
     },
     type: {
         type: String,
+        enum: ['top', 'bottom', 'shoes', 'accessories'],
         required: true,
     },
     category: {
+        type: String,
+        required: true,
+    },
+    gender: {
         type: String,
         required: true,
     }

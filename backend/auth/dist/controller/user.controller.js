@@ -59,8 +59,8 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             expiresIn: "168h",
         });
         res.cookie("token", token, { httpOnly: true, secure: true, maxAge: 1000 * 60 * 60 * 24 * 7 });
-        // res.json({ redirectURl: "http://localhost:3000/home" });
-        return res.redirect("http://localhost:3000/home");
+        res.json({ token, user });
+        // res.redirect("http://localhost:3000/home");
     }
     catch (err) {
         res.status(500).json({ message: "internal server error" });
