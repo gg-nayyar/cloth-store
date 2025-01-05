@@ -3,7 +3,6 @@ import React from "react";
 import Image from "next/image";
 import LoginForm from "../components/login-form";
 import axios from "axios";
-import { redirect } from "next/navigation";
 
 export default function Home() {
   type LoginFormData = {
@@ -18,7 +17,7 @@ export default function Home() {
       { withCredentials: true }
     );
     if(response.data.token){
-      redirect('/home')
+      window.location.href = '/home'
     }
   }; 
   // const handleGoogleLogin = () => {
