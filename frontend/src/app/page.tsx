@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import LoginForm from "../components/login-form";
 import axios from "axios";
+import { redirect } from "next/navigation";
 
 export default function Home() {
   type LoginFormData = {
@@ -11,12 +12,15 @@ export default function Home() {
   };
   const handleLoginData = async (data: LoginFormData) => {
     console.log("DATA: ", data);
-    axios.post<{ redirectUrl?: string }>(
+    const response = await axios.post<{token:string,user:object}>(
       "http://localhost:8001/api/login",
       data,
       { withCredentials: true }
     );
-  };
+    if(response.data.token){
+      redirect('/home')
+    }
+  }; 
   // const handleGoogleLogin = () => {
   //   window.location.href = "http://localhost:8001/api/google";
   // };
