@@ -54,7 +54,6 @@ export const login = async (
       { httpOnly: true, secure: true, maxAge: 1000 * 60 * 60 * 24 * 7 }
     );
     res.json({ token, user });
-    // res.redirect("http://localhost:3000/home");
   } catch (err) {
     res.status(500).json({ message: "internal server error" });
   }
@@ -118,7 +117,7 @@ export const googleAuthCallback = async (req: Request, res: Response): Promise<a
     });
 
     res.cookie("token", token, { httpOnly: true });
-    res.json({ token, user });
+    res.redirect(`${process.env.ORIGIN_LINK}/home`)
   } catch (error) {
     console.error("Google Login Error:", error);
     res.status(500).json({ message: "Internal server error" });

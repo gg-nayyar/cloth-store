@@ -12,6 +12,10 @@ import { Label } from "@/components/ui/label";
 import React from "react";
 import { useState } from "react";
 
+const handleGoogleLogin = () => {
+  window.location.href = "http://localhost:8001/api/google";
+};
+
 interface LoginFormProps {
   onSubmit?: (data: { email: string; password: string }) => void;
   className?: string;
@@ -65,7 +69,7 @@ export default function LoginForm({
               <Button type="submit" className="w-full">
                 Login
               </Button>
-              <Button variant="outline" className="w-full">
+              <Button onClick={handleGoogleLogin} variant="outline" className="w-full">
                 Login with Google
               </Button>
             </div>

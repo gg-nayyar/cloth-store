@@ -20,10 +20,6 @@ export default function Home() {
       window.location.href = '/home'
     }
   }; 
-  // const handleGoogleLogin = () => {
-  //   window.location.href = "http://localhost:8001/api/google";
-  // };
-
   return (
     <div className="flex h-screen w-screen">
       <div className="h-full w-3/4 bg-skin">
