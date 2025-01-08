@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
-app.use('/api/product',isAdmin,productRouter);
-app.use('/api/order',orderRouter);
+app.use('/',isAdmin,productRouter);
+app.use('/order',orderRouter);
 
 export default app;

@@ -12,12 +12,12 @@ const page = () => {
       const handleLoginData = async (data: LoginFormData) => {
         console.log("DATA: ", data);
         const response = await axios.post<{token:string,user:object}>(
-          "http://localhost:8001/api/login",
+          "http://localhost:8000/api/user/login",
           data,
           { withCredentials: true }
         );
         if(response.data.token){
-          window.location.href = '/home'
+          window.location.href = '/'
         }
       }; 
       return (

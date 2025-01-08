@@ -12,6 +12,6 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cookie_parser_1.default)());
-app.use('/api/product', admin_middleware_1.default, products_routes_1.default);
-app.use('/api/order', order_routes_1.default);
+app.use('/', admin_middleware_1.default, products_routes_1.default);
+app.use('/order', order_routes_1.default);
 exports.default = app;

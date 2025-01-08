@@ -1,38 +1,33 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.authMiddleware = void 0;
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const user_model_1 = __importDefault(require("../models/user.model"));
-const authMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const token = req.cookies.token;
-    if (!token) {
-        return res.status(401).json({ message: "Unauthorized" });
-    }
-    try {
-        const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_KEY);
-        const user = yield user_model_1.default.findById(decoded.id);
-        if (user) {
-            req.user = user;
-        }
-        else {
-            return res.status(401).json({ message: "Unauthorized" });
-        }
-        return next();
-    }
-    catch (err) {
-        return res.status(401).json({ message: 'Unauthorized' });
-    }
-});
-exports.authMiddleware = authMiddleware;
+// import express from "express";
+// import jwt from "jsonwebtoken";
+// import userModel from "../models/user.model";
+// // import { Iuser } from "../models/user.model"; // Adjust the import path as necessary
+// interface Iuser {
+//     _id: string;
+//     name: string;
+//     email: string;
+//     password: string;
+//     googleId?: string;
+//     avatar?: string;
+//     createdAt?: Date;
+//     updatedAt?: Date;
+// }
+// export const authMiddleware = async (req: express.Request, res: express.Response, next: express.NextFunction):Promise<any|null> => {
+//     const token = req.cookies.token;
+//     if (!token) {
+//         return res.status(401).json({ message: "Unauthorized" });
+//     }
+//     try {
+//         const decoded = jwt.verify(token, process.env.JWT_KEY!) as jwt.JwtPayload;
+//         const user = await userModel.findById(decoded.id);
+//         if (user) {
+//             req.user = user as Iuser;
+//         } else {
+//             return res.status(401).json({ message: "Unauthorized" });
+//         }
+//         return next();
+//     } catch (err) {
+//         return res.status(401).json({ message: 'Unauthorized' });
+//     }
+// }

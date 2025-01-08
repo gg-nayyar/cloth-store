@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.googleAuthRedirect = exports.googleAuthCallback = exports.getUserbyId = exports.profile = exports.logout = exports.login = exports.register = void 0;
+exports.googleAuthRedirect = exports.googleAuthCallback = exports.getUserbyId = exports.logout = exports.login = exports.register = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -60,7 +60,6 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
         res.cookie("token", token, { httpOnly: true, secure: true, maxAge: 1000 * 60 * 60 * 24 * 7 });
         res.json({ token, user });
-        // res.redirect("http://localhost:3000/home");
     }
     catch (err) {
         res.status(500).json({ message: "internal server error" });
@@ -77,16 +76,14 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.logout = logout;
-const profile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        console.log(req.user);
-        res.send(req.user);
-    }
-    catch (error) {
-        res.status(500).json({ message: "Internal server error" });
-    }
-});
-exports.profile = profile;
+// export const profile = async (req: Request, res: Response): Promise<void> => {
+//   try {
+//     console.log(req.user);
+//     res.send(req.user);
+//   } catch (error) {
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// };
 const getUserbyId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
@@ -121,7 +118,7 @@ const googleAuthCallback = (req, res) => __awaiter(void 0, void 0, void 0, funct
             expiresIn: "7d",
         });
         res.cookie("token", token, { httpOnly: true });
-        res.json({ token, user });
+        res.redirect(`${process.env.ORIGIN_LINK}`);
     }
     catch (error) {
         console.error("Google Login Error:", error);
