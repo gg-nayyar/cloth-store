@@ -23,10 +23,12 @@ export default function Home() {
       </div>
       <div className="flex items-center h-full w-full ">
         <div className="flex justify-center bg-transparent h-16 w-full">
+          <Link href="/products">
           <Button
             text="Explore New Catalogue"
             className="bg-transparent w-48 hover:bg-red-500"
           />
+          </Link>
         </div>
       </div>
       <div className="flex flex-col rounded bg-white bold bg-opacity-70">
