@@ -117,7 +117,7 @@ export const googleAuthCallback = async (req: Request, res: Response): Promise<a
     });
 
     res.cookie("token", token, { httpOnly: true });
-    res.redirect(`${process.env.ORIGIN_LINK}/home`)
+    res.redirect(`${process.env.ORIGIN_LINK}`)
   } catch (error) {
     console.error("Google Login Error:", error);
     res.status(500).json({ message: "Internal server error" });
