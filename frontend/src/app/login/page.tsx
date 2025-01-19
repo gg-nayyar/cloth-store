@@ -4,7 +4,7 @@ import Image from "next/image";
 import LoginForm from "../../components/login-form";
 import axios from "axios";
 
-const page = () => {
+const Page = () => {
     type LoginFormData = {
         email: string;
         password: string;
@@ -39,4 +39,4 @@ const page = () => {
       );
 }
 
-export default page
+export default Page;
