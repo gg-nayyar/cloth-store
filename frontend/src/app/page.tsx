@@ -11,7 +11,7 @@ export default function Home() {
     <div className="h-screen w-full ">
       <Image
         className="bg-cover h-screen w-full -z-50 fixed "
-        src="/background.webp"
+        src="/background_cloth.webp"
         height={100}
         width={100}
         alt="Background"
@@ -22,11 +22,11 @@ export default function Home() {
         <Header />
       </div>
       <div className="flex items-center h-full w-full ">
-        <div className="flex justify-center bg-transparent h-16 w-full">
+        <div className="flex font-playwrite justify-center bg-transparent h-16 w-full">
           <Link href="/products">
           <Button
             text="Explore New Catalogue"
-            className="bg-transparent w-48 hover:bg-red-500"
+            className="bg-gray-50 opacity-80 w-48 hover:bg-red-500"
           />
           </Link>
         </div>
