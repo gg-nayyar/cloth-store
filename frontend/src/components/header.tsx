@@ -16,7 +16,7 @@ const header = () => {
             <div className="flex items-center lg:order-2">
               <a
                 href="/login"
-                className="text-brown opacity-80 dark:text-white bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
+                className="font-bold font-mono opacity-80 dark:text-brown bg-gray-50 focus:ring-4 focus:ring-gray-300 rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
               >
                 Log in
               </a>

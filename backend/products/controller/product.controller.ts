@@ -13,7 +13,7 @@ export const createProduct = async (req: Request, res: Response) => {
 };
 export const getProducts = async (req: Request, res: Response) => {
   try {
-    const products = await productModel.find();
+    const products = await productModel.find().sort({ createdAt: -1 });
     res.json({ products });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });

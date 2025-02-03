@@ -1,3 +1,4 @@
+import cors from "cors"
 import dotenv from "dotenv"
 import express from "express"
 import expressProxy from "express-http-proxy"
@@ -6,6 +7,7 @@ dotenv.config();
 
 const app = express();
 
+app.use(cors({origin: process.env.ORIGIN_LINK,credentials:true}))
 app.use('/api/user', expressProxy('http://localhost:8001'))
 app.use('/api/products', expressProxy('http://localhost:8002'))
 

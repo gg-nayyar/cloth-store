@@ -41,6 +41,9 @@ const productSchema = new mongoose.Schema({
   //       ref: "Review",
   //     },
   //   ],
+},
+{
+  timestamps: true,
 });
 
 export default mongoose.model("Product", productSchema);

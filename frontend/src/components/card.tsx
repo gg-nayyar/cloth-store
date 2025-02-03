@@ -12,7 +12,7 @@ const Card = (props:Product) => {
     <div className="max-w-2xl mx-auto">
     
     
-        <div className="bg-white shadow-md rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">
+        <div className="bg-brown shadow-md rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">
             <a href="#">
                 <img className="rounded-t-lg p-8" src={props.image} alt="product image"/>
             </a>
