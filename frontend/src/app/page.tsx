@@ -3,6 +3,7 @@ import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import Card from "@/components/card";
+import {useRouter} from "next/navigation";
 import Header from "@/components/header";
 import Footer from "../components/footer"
 import React, { useEffect, useState } from "react";
@@ -21,7 +22,9 @@ export default function Home() {
     type?: string;
     category?: string;
     gender?: string;
+    onClick?: () => void;
   }
+  const router = useRouter();
   const [products,setProducts] = useState<Product[]>([])
   
   function getProductsByDate(){
@@ -93,7 +96,19 @@ export default function Home() {
         <h1 className="text-4xl font-playwrite p-5 text-brown font-extrabold dark:text-black mb-5 mt-3">New Arrivals:</h1>
          <div className="flex h-auto w-full">
          {products.map((product) => {
-            return <Card key={product._id} name={product.name} description={product.description} price={product.price} image="/men.gif" />
+            return (
+              <Card
+              key={product._id}
+              name={product.name}
+              description={product.description}
+              price={product.price}
+              image="/men.gif"
+              onClick={() => {
+                console.log(`Navigating to /product/${product._id}`);
+                router.push(`/products/${product._id}`);
+              }}
+              />
+            );
         })}
          </div>
       </div>

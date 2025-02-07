@@ -1,14 +1,35 @@
 'use client'
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaStar, FaRegStar } from "react-icons/fa";
+import axios from "axios";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import Header from "../../../components/header";
+import { useParams } from "next/navigation";
+
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  description: string;
+  image: string[];
+}
 
 const ProductPage = () => {
+  const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
+  const [product, setProduct] = useState<Product | null>(null);
   
   const increaseQuantity = () => setQuantity(quantity + 1);
   const decreaseQuantity = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
+
+  useEffect(() => {
+    if(!id) return;
+
+    axios.get(`http://localhost:8000/api/products/getSingleProduct/${id}`).then((response) => {
+      const data = response.data as { product: Product };
+      setProduct(data.product);
+    });
+  },[id])
 
   return (
     <div className="min-h-screen bg-skin text-white p-6">
@@ -16,7 +37,7 @@ const ProductPage = () => {
       <div className="flex flex-col lg:flex-row items-center justify-center mt-10 gap-10 p-6">
         <div className="w-full lg:w-1/2">
           <img
-            src="https://via.placeholder.com/500"
+            src="/men.gif"
             alt="Product"
             className="w-full rounded-lg"
           />
@@ -27,7 +48,7 @@ const ProductPage = () => {
           </div>
         </div>
         <div className="w-full lg:w-1/2 bg-white text-black p-6 rounded-2xl shadow-lg">
-          <h2 className="text-3xl font-bold">Big Italian Sofa</h2>
+          {product && <h2 className="text-3xl font-bold">{product.name}</h2>}
           <div className="flex items-center gap-1 mt-2">
             {[...Array(4)].map((_, i) => (
               <FaStar key={i} className="text-yellow-500" />
@@ -42,10 +63,10 @@ const ProductPage = () => {
 
           {/* Price */}
           <div className="flex items-center gap-4 mt-4">
-            <span className="text-3xl font-semibold text-yellow-500">$450</span>
-            <span className="text-gray-400 line-through text-xl">$599</span>
+            {product && <span className="text-3xl font-semibold text-yellow-500">₹{product.price}</span>}
+            {product && <span className="text-gray-400 line-through text-xl">₹{product.price + 300}</span>}
           </div>
-          <p className="text-gray-600 mt-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem exercitationem voluptate sint eius ea assumenda provident eos repellendus qui neque!</p>
+          {product && <p className="text-gray-600 mt-4">{product.description}</p>}
           <div className="mt-4">
             <h4 className="font-semibold">Size:</h4>
             <div className="flex gap-2 mt-2">
