@@ -95,16 +95,16 @@ export default function Home() {
       <div className="flex flex-col bg-white bg-opacity-70">
         <h1 className="text-4xl font-playwrite p-5 text-brown font-extrabold dark:text-black mb-5 mt-3">New Arrivals:</h1>
          <div className="flex h-auto w-full">
-         {products.map((product) => {
+         {products.slice(0,4).map((product) => {
             return (
               <Card
+              className="max-w-2xl mx-auto"
               key={product._id}
               name={product.name}
               description={product.description}
               price={product.price}
               image="/men.gif"
               onClick={() => {
-                console.log(`Navigating to /product/${product._id}`);
                 router.push(`/products/${product._id}`);
               }}
               />

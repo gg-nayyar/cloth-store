@@ -1,16 +1,19 @@
-import React from 'react'
+import React from 'react';
+
 
 interface Product{
     name: string,
     price: number,
     description:string;
-    image: string
+    image: string;
+    className: string;
     onClick?: () => void;
 }
 
 const Card = (props:Product) => {
+
   return (
-    <div onClick={props.onClick} className="max-w-2xl mx-auto">
+    <div onClick={props.onClick} className={props.className}>
     
     
         <div className="bg-brown shadow-md rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">

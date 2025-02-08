@@ -3,12 +3,12 @@ import { Request, Response } from "express";
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    const { name, description, price, image, stuff, type, category, gender } = req.body;
-    const newProduct = new productModel({ name, description, price, image, stuff, type, category, gender});
+    const { name, price, description, image, material, type, category, gender } = req.body;
+    const newProduct = new productModel({ name, price, description, image, material, type, category, gender});
     await newProduct.save();
     res.json({ message: "Product created successfully", product: newProduct });
   } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error aaaa" });
   }
 };
 export const getProducts = async (req: Request, res: Response) => {

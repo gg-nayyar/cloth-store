@@ -12,7 +12,7 @@ const isAdmin = async (req: express.Request, res: express.Response, next: expres
             return res.status(401).json({ message: "Unauthorized" });
         }
         const decoded = jwt.verify(cookie, process.env.JWT_KEY!) as jwt.JwtPayload;
-        const user = await axios.get<{ name:string,email: string,password:string }>(`http://localhost:8001/api/getUserbyId/${decoded.id}`);
+        const user = await axios.get<{ name:string,email: string,password:string }>(`http://localhost:8000/api/user/getUserbyId/${decoded.id}`);
         if (!user) {
             return res.status(401).json({ message: "Unauthorized" });
         }

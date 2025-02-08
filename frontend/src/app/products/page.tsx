@@ -4,6 +4,7 @@ import axios from "axios";
 import Image from "next/image";
 import Header from "@/components/header";
 import Card from "@/components/card";
+import {useRouter} from "next/navigation";
 
 const Page = () => {
     interface Product{
@@ -13,6 +14,7 @@ const Page = () => {
         description:string;
         images: Array<string>
     }
+    const router = useRouter();
     const [products,setProducts] = useState<Product[]>([])
   async function getAllProducts() {
     const response = await axios.get<{ products: Product[] }>(
@@ -36,9 +38,13 @@ const Page = () => {
                 unoptimized
               />
         <Header/>
-        {products.map((product) => {
-            return <Card key={product._id} name={product.name} description={product.description} price={product.price} image="/men.gif" />
-        })}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-5">
+          {products.map((product) => {
+            return <Card className="w-full h-full m-5" key={product._id} name={product.name} description={product.description} price={product.price} image="/men.gif" onClick={() => {
+              router.push(`/products/${product._id}`);
+            }} />
+          })}
+        </div>
       {/* <button className="h-52 w-52" onClick={getAllProducts}>
         Click Me!!
       </button> */}
